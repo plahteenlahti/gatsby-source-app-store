@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-app-store",
   "description": "Gatsby source plugin for building websites using App Store as a data source",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "author": "Perttu Lähteenlahti <perttu@lahteenlahti.com>",
   "bugs": {
