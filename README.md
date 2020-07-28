@@ -1,10 +1,12 @@
 # gatsby-source-app-store
-Gatsby source plugin that pulls data from App Store such as app information and review
+Gatsby source plugin that pulls data from App Store such as app information and user reviews. Great for building landing pages for apps with data for user testimonials,scores and release notes pulled straigh from app store
 
 ## Demo
-[💤 Apps](https://sleep-apps.lahteenlahti.com)
+
+- __[💤 Apps](https://sleep-apps.lahteenlahti.com)__
 
 ## Description
+
 This plugin pull data from Apple App Store using [app-store-scraper](https://www.npmjs.com/package/app-store-scraper). It fetches information about the app such as category, description, release notes, etc. as well user reviews. The amount of user reviews limited to the amount you can find on Apple's App Store website.
 
 
@@ -12,7 +14,7 @@ This plugin pull data from Apple App Store using [app-store-scraper](https://www
 To install run
 ```
 npm install gatsby-source-app-store
-or 
+// or 
 yarn add gatsby-source-app-store
 ```
 
@@ -32,11 +34,9 @@ module.exports = {
     },
   ],
 }
-
 ```
 
 ## Available options 
-## Options
 
 | **Name**  | **Type**         | **Description**                                                                                                                                                                                         |
 | :-------- | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -131,7 +131,7 @@ __Query all reviews__
   }
 }
 ```
-__Query reviews for a single app__
+__Query a single review for an app__
 ```graphql
 {
   review(appId: {eq: "app.sleepcircle.application"}) {
