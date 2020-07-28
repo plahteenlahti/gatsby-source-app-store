@@ -1,32 +1,161 @@
 # gatsby-source-app-store
 Gatsby source plugin that pulls data from App Store such as app information and review
 
-## Description
-This plugin pull data from Apple App Store using (app-store-scraper)[https://www.npmjs.com/package/app-store-scraper]. 
+## Demo
+[💤 Apps](https://sleep-apps.lahteenlahti.com)
 
-### Learning Resources (optional)
-coming soon
+## Description
+This plugin pull data from Apple App Store using [app-store-scraper](https://www.npmjs.com/package/app-store-scraper). It fetches information about the app such as category, description, release notes, etc. as well user reviews. The amount of user reviews limited to the amount you can find on Apple's App Store website.
+
 
 ## How to install
-Please include installation instructions here.
-Gatsby documentation uses `npm` for installation. This is the recommended approach for plugins as well.
-If the plugin is a theme that needs to use `yarn`, please point to [the documentation for switching package managers](/docs/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) in addition to the `yarn`-based instructions.
+To install run
+```
+npm install gatsby-source-app-store
+or 
+yarn add gatsby-source-app-store
+```
 
-## Available options (if any)
+## How to use
+
+```js
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    // Add the plugin to your gatsby-config
+    {
+      resolve: `gatsby-source-app-store`,
+      options: {
+        apps: ["app.sleepcircle.application"], // required
+        country: "fi" // optional, can affect the language of reviews
+      },
+    },
+  ],
+}
+
+```
+
+## Available options 
+## Options
+
+| **Name**  | **Type**         | **Description**                                                                                                                                                                                         |
+| :-------- | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| apps       | array of strings | `Required.`, list all the application bundle ids for which you want to fetch data for.|
+| country   | string           | `Optional.` language code from which which the data will be fetched. Will affect the language of the reviews                                                                                                      
+
+## How to query for data 
+__Query all apps__
+```graphql
+{
+  allApp {
+    edges {
+      node {
+        appId
+        currentVersionScore
+        requiredOsVersion
+        size
+        title
+        url
+        developerUrl
+        developerWebsite
+        score
+        genres
+        currentVersionReviews
+        currency
+        contentRating
+        price
+        languages
+        released
+        developer
+        developerId
+        version
+        releaseNotes
+        updated
+        icon
+      }
+    }
+  }
+}
+```
+
+__Query single app__
+```graphql
+{
+  app(appId: {eq: "app.sleepcircle.application"}) {
+    appId
+    contentRating
+    currency
+    currentVersionReviews
+    currentVersionScore
+    description
+    developer
+    developerId
+    developerUrl
+    developerWebsite
+    free
+    genreIds
+    genres
+    id
+    icon
+    languages
+    price
+    primaryGenreId
+    primaryGenre
+    releaseNotes
+    released
+    requiredOsVersion
+    score
+    size
+    title
+    updated
+    version
+    url
+  }
+}
+```
+__Query all reviews__
+```graphql
+{
+  allReview {
+    nodes {
+      appId
+      id
+      score
+      text
+      title
+      url
+      userName
+      userUrl
+      version
+    }
+  }
+}
+```
+__Query reviews for a single app__
+```graphql
+{
+  review(appId: {eq: "app.sleepcircle.application"}) {
+    appId
+    id
+    score
+    text
+    title
+    url
+    userName
+    userUrl
+    version
+  }
+}
+
+```
 
 
 ## When do I use this plugin?
-Include stories about when this plugin is helpful and/or necessary.
-## Examples of usage
-This usually shows a code example showing how to include this plugin in a site's `config.js` file.
-    code example
-//See this [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code) on how to format code examples.
-This section could also include before-and-after examples of data when the plugin is enabled, if applicable.
-## How to query for data (source plugins only)
+This plugin is perfect for the following use cases:
+1. You've developed an iOS app and want to show user reviews (as testimonials) on your app's website
+2. You've a developer portfolio of the iOS apps you've built and want to show information such as ratings, reviews, etc to richen the portfolio site
+3. You want to do competetive analysis between different apps
 
-If this is a source plugin README, source plugins ought to allow people to query for data within their Gatsby site. Please include code examples to show how to query for data using your source plugin.
-If this is a theme that requires data in a specific format in order to match an existing query, include those examples here.
-## How to run tests
-## How to develop locally
+
 ## How to contribute
-If you have unanswered questions, would like help with enhancing or debugging the plugin, it is nice to include instructions for people who want to contribute to your plugin.
+All contributions are welcome
