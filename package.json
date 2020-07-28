@@ -2,22 +2,39 @@
   "name": "gatsby-source-app-store",
   "description": "Gatsby source plugin for building websites using App Store as a data source",
   "version": "1.0.0",
+  "main": "index.js",
   "author": "Perttu Lähteenlahti <perttu@lahteenlahti.com>",
   "bugs": {
     "url": "https://github.com/plahteenlahti/gatsby-source-app-store/issues"
   },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build"
+  },
   "dependencies": {
+    "@babel/runtime": "^7.0.0",
     "app-store-scraper": "^0.16.3"
   },
   "homepage": "https://github.com/plahteenlahti/gatsby-source-app-store#readme",
   "keywords": [
     "gatsby",
-		"gatsby-plugin",
-		"app-store"
+    "gatsby-plugin",
+    "gatsby-source",
+    "app-store"
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha"
+    "gatsby": "^2.0.0"
   },
-  "repository": "https://github.com/plahteenlahti/gatsby-source-app-store"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plahteenlahti/gatsby-source-app-store"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "babel-preset-gatsby-package": "^0.1.4",
+    "cross-env": "^5.0.5"
+  }
 }
