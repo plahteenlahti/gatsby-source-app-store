@@ -1,20 +1,20 @@
-const store = require("app-store-scraper")
+const store = require("app-store-scraper");
 
 exports.sourceNodes = async (
   { actions, createContentDigest, createNodeId },
   { apps, country }
 ) => {
-  const { createNode } = actions
+  const { createNode } = actions;
 
   try {
-    const appList = apps || ["app.sleepcircle.application"]
-    const promises = []
-    appList.forEach(app => {
-      promises.push(getReviews(app, country))
-    })
+    const appList = apps || ["app.sleepcircle.application"];
+    const promises = [];
+    appList.forEach((app) => {
+      promises.push(getReviews(app, country));
+    });
 
-    const appReviews = await Promise.all(promises)
-    appReviews.forEach(app => {
+    const appReviews = await Promise.all(promises);
+    appReviews.forEach((app) => {
       const appNode = {
         id: createNodeId(`app-${app.id}`),
         parent: `__SOURCE__`,
@@ -56,15 +56,17 @@ exports.sourceNodes = async (
         reviews: app.reviews,
         currentVersionScore: app.currentVersionScore,
         currentVersionReviews: app.currentVersionReviews,
-      }
-      createNode(appNode)
+      };
+      createNode(appNode);
 
-      app.reviews.forEach(review => {
+      if (!app.reviews) return;
+
+      app.reviews.forEach((review) => {
         const fieldData = {
           key: review.id,
           foo: review.url,
           bar: review.app,
-        }
+        };
         const reviewNode = {
           id: createNodeId(`review-${review.id}`),
           parent: `__SOURCE__`,
@@ -81,40 +83,40 @@ exports.sourceNodes = async (
           userName: review.userName,
           score: review.score,
           appId: review.appId,
-        }
-        createNode(reviewNode)
-      })
-    })
+        };
+        createNode(reviewNode);
+      });
+    });
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
 
 const getReviews = async (appId, country) => {
   try {
-    let page = 0
-    let allReviews = []
+    let page = 0;
+    let allReviews = [];
     // Apple only allows fetching of 10 pages
-    const app = await store.app({ appId: appId, country: country })
+    const app = await store.app({ appId: appId, country: country });
     while (page < 10) {
       const reviews = await store.reviews({
         appId: appId,
         country: country,
         sort: store.sort.HELPFUL,
         page: page,
-      })
+      });
 
-      const addApp = reviews.map(review => ({ ...review, appId: appId }))
-      allReviews.push(...addApp)
-      page++
+      const addApp = reviews.map((review) => ({ ...review, appId: appId }));
+      allReviews.push(...addApp);
+      page++;
     }
 
     return {
       ...app,
       reviews: allReviews,
-    }
+    };
   } catch (error) {
-    console.error(error)
-    return []
+    console.error(error);
+    return [];
   }
-}
+};
