@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-source-app-store",
+  "name": "@plahteenlahti/gatsby-source-app-store",
   "description": "Gatsby source plugin for building websites using App Store as a data source",
   "version": "1.0.7",
   "main": "index.js",
